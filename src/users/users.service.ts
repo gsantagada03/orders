@@ -12,6 +12,12 @@ export class UsersService {
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {}
 
+  // READ
+  public findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
+
+  // CREATE
   public async create(dto: CreateUserDto): Promise<User> {
     const existingUser: User | null = await this.usersRepository.findOne({
       where: { email: dto.email },
@@ -28,9 +34,5 @@ export class UsersService {
     });
 
     return this.usersRepository.save(user);
-  }
-
-  public findAll(): Promise<User[]> {
-    return this.usersRepository.find();
   }
 }
